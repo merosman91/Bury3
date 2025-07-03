@@ -533,28 +533,45 @@
         </div>
     </div>
     
+    <!-- عناصر الصوت المخفية -->
+    <audio id="lowSound1" src="https://assets.mixkit.co/sfx/preview/mixkit-truck-horn-715.mp3" preload="auto"></audio>
+    <audio id="lowSound2" src="https://assets.mixkit.co/sfx/preview/mixkit-classic-car-horn-1110.mp3" preload="auto"></audio>
+    <audio id="lowSound3" src="https://assets.mixkit.co/sfx/preview/mixkit-vintage-car-horn-1173.mp3" preload="auto"></audio>
+    
+    <audio id="midSound1" src="https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" preload="auto"></audio>
+    <audio id="midSound2" src="https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" preload="auto"></audio>
+    <audio id="midSound3" src="https://assets.mixkit.co/sfx/preview/mixkit-retro-car-horn-1241.mp3" preload="auto"></audio>
+    
+    <audio id="highSound1" src="https://assets.mixkit.co/sfx/preview/mixkit-car-alarm-996.mp3" preload="auto"></audio>
+    <audio id="highSound2" src="https://assets.mixkit.co/sfx/preview/mixkit-sports-car-rev-1197.mp3" preload="auto"></audio>
+    <audio id="highSound3" src="https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" preload="auto"></audio>
+    
+    <audio id="comboSound1" src="https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" preload="auto"></audio>
+    <audio id="comboSound2" src="https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" preload="auto"></audio>
+    <audio id="comboSound3" src="https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" preload="auto"></audio>
+    
     <script>
         // مكتبة الأصوات المصرية والسودانية
         const soundLibrary = {
             low: [
-                { name: "بوري مصري قديم", url: "https://assets.mixkit.co/sfx/preview/mixkit-truck-horn-715.mp3" },
-                { name: "بوري سوداني عميق", url: "https://assets.mixkit.co/sfx/preview/mixkit-classic-car-horn-1110.mp3" },
-                { name: "بوري شاحنة نقل", url: "https://assets.mixkit.co/sfx/preview/mixkit-vintage-car-horn-1173.mp3" }
+                { name: "بوري مصري قديم", id: "lowSound1" },
+                { name: "بوري سوداني عميق", id: "lowSound2" },
+                { name: "بوري شاحنة نقل", id: "lowSound3" }
             ],
             mid: [
-                { name: "بوري تنبيه سوداني", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" },
-                { name: "بوري شاحنة مصرية", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" },
-                { name: "بوري نقل خفيف", url: "https://assets.mixkit.co/sfx/preview/mixkit-retro-car-horn-1241.mp3" }
+                { name: "بوري تنبيه سوداني", id: "midSound1" },
+                { name: "بوري شاحنة مصرية", id: "midSound2" },
+                { name: "بوري نقل خفيف", id: "midSound3" }
             ],
             high: [
-                { name: "بوري إنذار مصري", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-alarm-996.mp3" },
-                { name: "بوري سريع سوداني", url: "https://assets.mixkit.co/sfx/preview/mixkit-sports-car-rev-1197.mp3" },
-                { name: "بوري تنبيه عالي", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" }
+                { name: "بوري إنذار مصري", id: "highSound1" },
+                { name: "بوري سريع سوداني", id: "highSound2" },
+                { name: "بوري تنبيه عالي", id: "highSound3" }
             ],
             combo: [
-                { name: "توليفة مصرية ثلاثية", url: "https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" },
-                { name: "توليفة سودانية مميزة", url: "https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" },
-                { name: "مقطوعة سودانية تقليدية", url: "https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" }
+                { name: "توليفة مصرية ثلاثية", id: "comboSound1" },
+                { name: "توليفة سودانية مميزة", id: "comboSound2" },
+                { name: "مقطوعة سودانية تقليدية", id: "comboSound3" }
             ]
         };
         
@@ -579,42 +596,30 @@
         const soundLibraryContainer = document.getElementById('soundLibrary');
         const tabs = document.querySelectorAll('.tab');
         
-        // عناصر الصوت
-        let audioElements = {};
-        let activeSound = null;
-        let soundInterval = null;
+        // متغيرات التحكم بالصوت
         let globalVolume = 0.7;
-        
-        // تهيئة الأصوات
-        function initSounds() {
-            // إنشاء عناصر صوتية لكل نوع
-            for (const type in currentSounds) {
-                audioElements[type] = new Audio();
-                audioElements[type].src = currentSounds[type].url;
-                audioElements[type].volume = globalVolume;
-                audioElements[type].preload = "auto";
-            }
-            
-            soundStatus.textContent = "حالة الصوت: جاهز";
-        }
+        let soundInterval = null;
+        let isPlaying = false;
         
         // تشغيل الصوت
         function playSound(type) {
-            // إيقاف أي صوت قيد التشغيل
+            if (isPlaying) return;
+            
+            isPlaying = true;
             stopSound();
             
-            // تحديث مصدر الصوت إذا تغير
-            if (audioElements[type].src !== currentSounds[type].url) {
-                audioElements[type].src = currentSounds[type].url;
-            }
+            const sound = currentSounds[type];
+            soundStatus.textContent = `تشغيل: ${sound.name}`;
+            
+            // الحصول على عنصر الصوت
+            const audioElement = document.getElementById(sound.id);
             
             // ضبط مستوى الصوت
-            audioElements[type].volume = globalVolume;
+            audioElement.volume = globalVolume;
             
             // تشغيل الصوت
-            audioElements[type].play()
+            audioElement.play()
                 .then(() => {
-                    soundStatus.textContent = `تشغيل: ${currentSounds[type].name}`;
                     document.getElementById(`${type}Horn`).classList.add('playing');
                     
                     // اهتزاز الجهاز إذا كان مدعومًا
@@ -625,6 +630,7 @@
                 .catch(error => {
                     console.error('خطأ في تشغيل الصوت:', error);
                     soundStatus.textContent = "خطأ: يرجى النقر على الشاشة أولا";
+                    isPlaying = false;
                 });
         }
         
@@ -636,17 +642,23 @@
         // إيقاف الصوت
         function stopSound() {
             // إيقاف جميع الأصوات
-            for (const type in audioElements) {
-                audioElements[type].pause();
-                audioElements[type].currentTime = 0;
-                document.getElementById(`${type}Horn`).classList.remove('playing');
-            }
+            document.querySelectorAll('audio').forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0;
+            });
             
             // إيقاف أي إنترفال للصوت المستمر
             if (soundInterval) {
                 clearInterval(soundInterval);
                 soundInterval = null;
             }
+            
+            // تحديث الواجهة
+            document.querySelectorAll('.horn-btn').forEach(btn => {
+                btn.classList.remove('playing');
+            });
+            
+            isPlaying = false;
         }
         
         // تشغيل الصوت المستمر
@@ -655,7 +667,9 @@
             
             // تكرار الصوت كل 1.5 ثانية للاستمرارية
             soundInterval = setInterval(() => {
-                playSound(type);
+                if (!isPlaying) {
+                    playSound(type);
+                }
             }, 1500);
         }
         
@@ -675,7 +689,6 @@
                 `;
                 soundEl.addEventListener('click', () => {
                     currentSounds[type] = sound;
-                    audioElements[type].src = sound.url;
                     createSoundLibrary(type);
                 });
                 
@@ -701,7 +714,6 @@
         
         // تهيئة التطبيق
         function initApp() {
-            initSounds();
             createSoundLibrary();
             
             // أحداث الأزرار
@@ -736,9 +748,6 @@
             // التحكم في مستوى الصوت
             volumeSlider.addEventListener('input', () => {
                 globalVolume = parseFloat(volumeSlider.value);
-                for (const type in audioElements) {
-                    audioElements[type].volume = globalVolume;
-                }
             });
             
             // إظهار/إخفاء لوحة الإعدادات
