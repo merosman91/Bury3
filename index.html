@@ -21,6 +21,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow-x: hidden;
         }
         
         .container {
@@ -51,11 +52,12 @@
         }
         
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #e0e0e0;
             max-width: 800px;
             margin: 0 auto;
             line-height: 1.6;
+            padding: 0 15px;
         }
         
         /* تصميم الأزرار على شكل مثلث */
@@ -64,9 +66,9 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            height: 300px;
-            margin: 40px auto;
-            width: 300px;
+            height: 330px;
+            margin: 30px auto;
+            width: 330px;
         }
         
         .triangle-row {
@@ -76,13 +78,12 @@
         }
         
         .horn-btn {
-            background: linear-gradient(to bottom, #3a7bd5, #2c3e50);
             color: white;
             border: none;
             border-radius: 50%;
             width: 100px;
             height: 100px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -92,9 +93,12 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-            margin: 5px;
+            box-shadow: 
+                0 6px 15px rgba(0, 0, 0, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.2);
+            margin: 8px;
             z-index: 10;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
         
         .horn-btn:hover {
@@ -113,19 +117,16 @@
         }
         
         .low-horn { 
-            background: linear-gradient(to bottom, #3a7bd5, #1e3c72); 
-            transform: translateX(0);
+            background: linear-gradient(145deg, #1e3c72, #3a7bd5);
         }
         .mid-horn { 
-            background: linear-gradient(to bottom, #d5763a, #a04824); 
-            transform: translateY(0);
+            background: linear-gradient(145deg, #a04824, #d5763a);
         }
         .high-horn { 
-            background: linear-gradient(to bottom, #d53a7b, #721e3c); 
-            transform: translateX(0);
+            background: linear-gradient(145deg, #721e3c, #d53a7b);
         }
         .combo-horn { 
-            background: linear-gradient(to bottom, #7b3ad5, #3c1e72); 
+            background: linear-gradient(145deg, #3c1e72, #7b3ad5);
             width: 120px;
             height: 120px;
             z-index: 20;
@@ -133,6 +134,13 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(123, 58, 213, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(123, 58, 213, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(123, 58, 213, 0); }
         }
         
         .key-hint {
@@ -152,14 +160,16 @@
         .controls-panel {
             background: rgba(30, 30, 40, 0.85);
             border-radius: 20px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
         }
         
         .sound-library {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 15px;
             margin-top: 20px;
         }
@@ -171,11 +181,14 @@
             cursor: pointer;
             transition: all 0.3s;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
         
         .sound-option:hover {
             background: rgba(90, 90, 120, 0.7);
             transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .sound-option.selected {
@@ -186,7 +199,11 @@
         
         .sound-option h4 {
             margin-bottom: 8px;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .volume-control {
@@ -223,13 +240,13 @@
         }
         
         .footer {
-            margin-top: 40px;
+            margin-top: 30px;
             text-align: center;
             padding: 20px;
             background: rgba(0, 0, 0, 0.4);
             border-radius: 15px;
             width: 100%;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
         
         .truck-animation {
@@ -256,9 +273,8 @@
             100% { left: 100%; }
         }
         
-        .active {
-            transform: scale(0.95);
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+        .playing {
+            animation: pulse 0.5s infinite;
         }
         
         .sound-wave {
@@ -295,9 +311,9 @@
             text-align: center;
             font-size: 1.5rem;
             color: #ff9800;
-            margin: 20px 0 10px;
-            border-bottom: 2px solid #ff5722;
+            margin: 10px 0;
             padding-bottom: 10px;
+            border-bottom: 2px solid #ff5722;
         }
         
         .settings-btn {
@@ -328,29 +344,109 @@
             background: rgba(30, 30, 50, 0.95);
             border-radius: 15px;
             padding: 20px;
-            margin-top: 20px;
-            display: none;
+            margin: 20px auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 0, 0, 0.3);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        
+        .tab {
+            padding: 8px 20px;
+            background: rgba(70, 70, 90, 0.6);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            background: linear-gradient(to right, #ff8c00, #ffd700);
+            color: #222;
+            font-weight: bold;
+        }
+        
+        .tab:hover {
+            background: rgba(90, 90, 120, 0.7);
+        }
+        
+        .sound-group {
+            display: none;
+        }
+        
+        .sound-group.active {
+            display: block;
         }
         
         @media (max-width: 768px) {
             h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             .subtitle {
-                font-size: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .horn-triangle {
+                height: 280px;
+                width: 280px;
             }
             
             .horn-btn {
-                width: 80px;
-                height: 80px;
+                width: 85px;
+                height: 85px;
                 font-size: 1rem;
             }
             
             .combo-horn {
                 width: 100px;
                 height: 100px;
+            }
+            
+            .sound-option h4 {
+                font-size: 0.9rem;
+                height: 50px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .horn-triangle {
+                height: 240px;
+                width: 240px;
+            }
+            
+            .horn-btn {
+                width: 75px;
+                height: 75px;
+                font-size: 0.9rem;
+                margin: 5px;
+            }
+            
+            .combo-horn {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .sound-library {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -368,7 +464,7 @@
         <!-- تصميم الأزرار على شكل مثلث -->
         <div class="horn-triangle">
             <div class="triangle-row">
-                <button class="horn-btn high-horn" id="highHorn" data-type="high">
+                <button class="horn-btn high-horn" id="highHorn">
                     <i class="fas fa-volume-up"></i>
                     حادة
                     <span class="key-hint">1</span>
@@ -377,14 +473,14 @@
             </div>
             
             <div class="triangle-row">
-                <button class="horn-btn mid-horn" id="midHorn" data-type="mid">
+                <button class="horn-btn mid-horn" id="midHorn">
                     <i class="fas fa-volume"></i>
                     متوسطة
                     <span class="key-hint">2</span>
                     <div class="sound-wave"></div>
                 </button>
                 
-                <button class="horn-btn low-horn" id="lowHorn" data-type="low">
+                <button class="horn-btn low-horn" id="lowHorn">
                     <i class="fas fa-volume-down"></i>
                     منخفضة
                     <span class="key-hint">3</span>
@@ -392,9 +488,9 @@
                 </button>
             </div>
             
-            <button class="horn-btn combo-horn" id="comboHorn" data-type="combo">
-                <i class="fas fa-random"></i>
-                ثلاثية
+            <button class="horn-btn combo-horn" id="comboHorn">
+                <i class="fas fa-music"></i>
+                مقطوعة سودانية
                 <span class="key-hint">4</span>
                 <div class="sound-wave"></div>
             </button>
@@ -411,8 +507,18 @@
         </div>
         
         <div class="settings-panel" id="settingsPanel">
+            <button class="close-btn" id="closeBtn">
+                <i class="fas fa-times"></i>
+            </button>
             <h2 class="sound-title"><i class="fas fa-music"></i> مكتبة الأصوات</h2>
             <p style="text-align:center; margin-bottom:15px; color:#ff9800;">اختر صوتًا لكل زر من الأزرار</p>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="low">منخفضة</div>
+                <div class="tab" data-tab="mid">متوسطة</div>
+                <div class="tab" data-tab="high">حادة</div>
+                <div class="tab" data-tab="combo">ثلاثية</div>
+            </div>
             
             <div class="sound-library" id="soundLibrary">
                 <!-- سيتم ملء مكتبة الأصوات بواسطة الجافاسكريبت -->
@@ -425,7 +531,7 @@
         
         <div class="footer">
             <p>تطبيق محاكاة بوري 3 - أبواق الشاحنات المصرية والسودانية | اضغط باستمرار للصوت المستمر</p>
-            <p>يمكنك استخدام هذا التطبيق للتدرب على الأصوات أو للترفيه - يوصى باستخدام السماعات</p>
+            <p>المقطوعة السودانية: عزف تقليدي سوداني مميز</p>
         </div>
     </div>
     
@@ -475,7 +581,9 @@
         const soundStatus = document.getElementById('soundStatus');
         const settingsBtn = document.getElementById('settingsBtn');
         const settingsPanel = document.getElementById('settingsPanel');
+        const closeBtn = document.getElementById('closeBtn');
         const soundLibraryContainer = document.getElementById('soundLibrary');
+        const tabs = document.querySelectorAll('.tab');
         
         // عناصر الصوت
         let audioContext;
@@ -529,6 +637,54 @@
                     if (navigator.vibrate) {
                         navigator.vibrate(100);
                     }
+                    
+                    // إيقاف الصوت عند انتهائه
+                    source.onended = () => {
+                        document.getElementById(`${type}Horn`).classList.remove('playing');
+                    };
+                })
+                .catch(error => {
+                    console.error('خطأ في تحميل الصوت:', error);
+                    soundStatus.textContent = "خطأ في تحميل الصوت";
+                });
+        }
+        
+        // تشغيل المقطوعة السودانية
+        function playSudaneseMelody() {
+            if (!audioContext) return;
+            
+            stopSound();
+            
+            soundStatus.textContent = "تشغيل: مقطوعة سودانية تقليدية";
+            
+            // إنشاء مصدر الصوت
+            const source = audioContext.createBufferSource();
+            
+            // جلب ملف الصوت للمقطوعة السودانية
+            fetch("https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3")
+                .then(response => response.arrayBuffer())
+                .then(data => audioContext.decodeAudioData(data))
+                .then(buffer => {
+                    source.buffer = buffer;
+                    const gainNode = audioContext.createGain();
+                    gainNode.gain.value = globalVolume;
+                    
+                    source.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    source.start(0);
+                    
+                    activeSound = source;
+                    comboHornBtn.classList.add('playing');
+                    
+                    // اهتزاز الجهاز إذا كان مدعومًا
+                    if (navigator.vibrate) {
+                        navigator.vibrate(300);
+                    }
+                    
+                    // إيقاف الصوت عند انتهائه
+                    source.onended = () => {
+                        comboHornBtn.classList.remove('playing');
+                    };
                 })
                 .catch(error => {
                     console.error('خطأ في تحميل الصوت:', error);
@@ -566,105 +722,32 @@
         }
         
         // إنشاء مكتبة الأصوات
-        function createSoundLibrary() {
+        function createSoundLibrary(type = 'low') {
             soundLibraryContainer.innerHTML = '';
             
-            // أصوات النغمة المنخفضة
-            const lowGroup = document.createElement('div');
-            lowGroup.innerHTML = `<h3 style="color:#3a7bd5; grid-column:1/-1;">أصوات النغمة المنخفضة</h3>`;
-            soundLibrary.low.forEach((sound, index) => {
-                const isSelected = currentSounds.low === sound;
+            soundLibrary[type].forEach((sound, index) => {
+                const isSelected = currentSounds[type] === sound;
                 const soundEl = document.createElement('div');
                 soundEl.className = `sound-option ${isSelected ? 'selected' : ''}`;
                 soundEl.innerHTML = `
                     <h4>${sound.name}</h4>
-                    <button class="play-sample" data-type="low" data-index="${index}">
+                    <button class="play-sample">
                         <i class="fas fa-play"></i> تجربة
                     </button>
                 `;
                 soundEl.addEventListener('click', () => {
-                    currentSounds.low = sound;
-                    createSoundLibrary();
+                    currentSounds[type] = sound;
+                    createSoundLibrary(type);
                 });
-                lowGroup.appendChild(soundEl);
-            });
-            soundLibraryContainer.appendChild(lowGroup);
-            
-            // أصوات النغمة المتوسطة
-            const midGroup = document.createElement('div');
-            midGroup.innerHTML = `<h3 style="color:#d5763a; grid-column:1/-1;">أصوات النغمة المتوسطة</h3>`;
-            soundLibrary.mid.forEach((sound, index) => {
-                const isSelected = currentSounds.mid === sound;
-                const soundEl = document.createElement('div');
-                soundEl.className = `sound-option ${isSelected ? 'selected' : ''}`;
-                soundEl.innerHTML = `
-                    <h4>${sound.name}</h4>
-                    <button class="play-sample" data-type="mid" data-index="${index}">
-                        <i class="fas fa-play"></i> تجربة
-                    </button>
-                `;
-                soundEl.addEventListener('click', () => {
-                    currentSounds.mid = sound;
-                    createSoundLibrary();
-                });
-                midGroup.appendChild(soundEl);
-            });
-            soundLibraryContainer.appendChild(midGroup);
-            
-            // أصوات النغمة الحادة
-            const highGroup = document.createElement('div');
-            highGroup.innerHTML = `<h3 style="color:#d53a7b; grid-column:1/-1;">أصوات النغمة الحادة</h3>`;
-            soundLibrary.high.forEach((sound, index) => {
-                const isSelected = currentSounds.high === sound;
-                const soundEl = document.createElement('div');
-                soundEl.className = `sound-option ${isSelected ? 'selected' : ''}`;
-                soundEl.innerHTML = `
-                    <h4>${sound.name}</h4>
-                    <button class="play-sample" data-type="high" data-index="${index}">
-                        <i class="fas fa-play"></i> تجربة
-                    </button>
-                `;
-                soundEl.addEventListener('click', () => {
-                    currentSounds.high = sound;
-                    createSoundLibrary();
-                });
-                highGroup.appendChild(soundEl);
-            });
-            soundLibraryContainer.appendChild(highGroup);
-            
-            // أصوات التوليفة الثلاثية
-            const comboGroup = document.createElement('div');
-            comboGroup.innerHTML = `<h3 style="color:#7b3ad5; grid-column:1/-1;">أصوات التوليفة الثلاثية</h3>`;
-            soundLibrary.combo.forEach((sound, index) => {
-                const isSelected = currentSounds.combo === sound;
-                const soundEl = document.createElement('div');
-                soundEl.className = `sound-option ${isSelected ? 'selected' : ''}`;
-                soundEl.innerHTML = `
-                    <h4>${sound.name}</h4>
-                    <button class="play-sample" data-type="combo" data-index="${index}">
-                        <i class="fas fa-play"></i> تجربة
-                    </button>
-                `;
-                soundEl.addEventListener('click', () => {
-                    currentSounds.combo = sound;
-                    createSoundLibrary();
-                });
-                comboGroup.appendChild(soundEl);
-            });
-            soundLibraryContainer.appendChild(comboGroup);
-            
-            // إضافة أحداث لأزرار التجربة
-            document.querySelectorAll('.play-sample').forEach(btn => {
-                btn.addEventListener('click', (e) => {
+                
+                soundEl.querySelector('.play-sample').addEventListener('click', (e) => {
                     e.stopPropagation();
-                    const type = btn.dataset.type;
-                    const index = parseInt(btn.dataset.index);
                     
                     // حفظ الصوت الحالي مؤقتاً
                     const tempSound = currentSounds[type];
                     
                     // تشغيل الصوت المحدد
-                    currentSounds[type] = soundLibrary[type][index];
+                    currentSounds[type] = sound;
                     playSound(type);
                     
                     // إعادة الصوت الأصلي بعد التشغيل
@@ -672,6 +755,8 @@
                         currentSounds[type] = tempSound;
                     }, 2000);
                 });
+                
+                soundLibraryContainer.appendChild(soundEl);
             });
         }
         
@@ -693,22 +778,7 @@
             highHornBtn.addEventListener('mouseup', stopSound);
             highHornBtn.addEventListener('mouseleave', stopSound);
             
-            comboHornBtn.addEventListener('mousedown', () => playSound('combo'));
-            comboHornBtn.addEventListener('mouseup', stopSound);
-            comboHornBtn.addEventListener('mouseleave', stopSound);
-            
-            // أحداث لوحة المفاتيح
-            document.addEventListener('keydown', (e) => {
-                if (e.key === '1') playContinuousSound('high');
-                if (e.key === '2') playContinuousSound('mid');
-                if (e.key === '3') playContinuousSound('low');
-                if (e.key === '4') playSound('combo');
-            });
-            
-            document.addEventListener('keyup', (e) => {
-                if (['1','2','3'].includes(e.key)) stopSound();
-                if (e.key === '4') stopSound();
-            });
+            comboHornBtn.addEventListener('mousedown', playSudaneseMelody);
             
             // التحكم في مستوى الصوت
             volumeSlider.addEventListener('input', () => {
@@ -717,7 +787,20 @@
             
             // إظهار/إخفاء لوحة الإعدادات
             settingsBtn.addEventListener('click', () => {
-                settingsPanel.style.display = settingsPanel.style.display === 'block' ? 'none' : 'block';
+                settingsPanel.style.display = 'block';
+            });
+            
+            closeBtn.addEventListener('click', () => {
+                settingsPanel.style.display = 'none';
+            });
+            
+            // تغيير التبويبات
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    createSoundLibrary(tab.dataset.tab);
+                });
             });
             
             // استعادة سياق الصوت عند النقر
@@ -734,4 +817,4 @@
         window.addEventListener('load', initApp);
     </script>
 </body>
-                    </html>
+    </html>
