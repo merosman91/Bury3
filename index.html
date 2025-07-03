@@ -42,7 +42,7 @@
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 10px;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
             background: linear-gradient(to right, #ffd700, #ff8c00);
@@ -52,7 +52,7 @@
         }
         
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #e0e0e0;
             max-width: 800px;
             margin: 0 auto;
@@ -66,9 +66,9 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            height: 330px;
+            height: 300px;
             margin: 30px auto;
-            width: 330px;
+            width: 300px;
         }
         
         .triangle-row {
@@ -81,9 +81,9 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            font-size: 1.1rem;
+            width: 90px;
+            height: 90px;
+            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -112,7 +112,7 @@
         }
         
         .horn-btn i {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 5px;
         }
         
@@ -127,8 +127,8 @@
         }
         .combo-horn { 
             background: linear-gradient(145deg, #3c1e72, #7b3ad5);
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             z-index: 20;
             position: absolute;
             top: 50%;
@@ -145,22 +145,22 @@
         
         .key-hint {
             position: absolute;
-            top: 10px;
-            right: 15px;
+            top: 8px;
+            right: 12px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            width: 25px;
-            height: 25px;
+            width: 22px;
+            height: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
         
         .controls-panel {
             background: rgba(30, 30, 40, 0.85);
             border-radius: 20px;
-            padding: 25px;
+            padding: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             margin-top: 20px;
             width: 100%;
@@ -169,15 +169,15 @@
         
         .sound-library {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
         }
         
         .sound-option {
             background: rgba(70, 70, 90, 0.6);
             border-radius: 10px;
-            padding: 15px;
+            padding: 12px;
             cursor: pointer;
             transition: all 0.3s;
             text-align: center;
@@ -198,9 +198,9 @@
         }
         
         .sound-option h4 {
-            margin-bottom: 8px;
-            font-size: 1rem;
-            height: 40px;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -209,21 +209,21 @@
         .volume-control {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 12px;
+            margin-top: 15px;
             background: rgba(70, 70, 90, 0.6);
-            padding: 15px;
+            padding: 12px;
             border-radius: 10px;
         }
         
         .volume-control i {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: #ff9800;
         }
         
         #volumeSlider {
             flex: 1;
-            height: 10px;
+            height: 8px;
             -webkit-appearance: none;
             background: #555;
             border-radius: 5px;
@@ -232,27 +232,27 @@
         
         #volumeSlider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 25px;
-            height: 25px;
+            width: 20px;
+            height: 20px;
             background: #ff9800;
             border-radius: 50%;
             cursor: pointer;
         }
         
         .footer {
-            margin-top: 30px;
+            margin-top: 25px;
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             background: rgba(0, 0, 0, 0.4);
             border-radius: 15px;
             width: 100%;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .truck-animation {
             width: 100%;
-            height: 100px;
-            margin-top: 20px;
+            height: 90px;
+            margin-top: 15px;
             position: relative;
             overflow: hidden;
             border-radius: 10px;
@@ -264,7 +264,7 @@
             left: -200px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 3.5rem;
+            font-size: 3rem;
             animation: drive 15s linear infinite;
         }
         
@@ -282,7 +282,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 10px;
+            height: 8px;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             opacity: 0;
             transition: opacity 0.3s;
@@ -295,42 +295,42 @@
         
         @keyframes wave {
             0% { background-position: 0 0; }
-            100% { background-position: 100px 0; }
+            100% { background-position: 80px 0; }
         }
         
         .status {
             text-align: center;
-            padding: 10px;
+            padding: 8px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 5px;
-            margin-top: 10px;
-            font-size: 0.9rem;
+            margin-top: 8px;
+            font-size: 0.85rem;
         }
         
         .sound-title {
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: #ff9800;
-            margin: 10px 0;
-            padding-bottom: 10px;
+            margin: 8px 0;
+            padding-bottom: 8px;
             border-bottom: 2px solid #ff5722;
         }
         
         .settings-btn {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 15px;
+            left: 15px;
             background: rgba(255, 152, 0, 0.7);
             border: none;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: white;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
@@ -343,39 +343,45 @@
         .settings-panel {
             background: rgba(30, 30, 50, 0.95);
             border-radius: 15px;
-            padding: 20px;
-            margin: 20px auto;
+            padding: 18px;
+            margin: 15px auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             width: 100%;
-            max-width: 600px;
+            max-width: 550px;
+            display: none;
         }
         
         .close-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 12px;
+            right: 12px;
             background: rgba(255, 0, 0, 0.3);
             border: none;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             color: white;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .tabs {
             display: flex;
             justify-content: center;
-            margin-bottom: 20px;
-            gap: 10px;
+            margin-bottom: 15px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
         
         .tab {
-            padding: 8px 20px;
+            padding: 6px 15px;
             background: rgba(70, 70, 90, 0.6);
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 0.9rem;
         }
         
         .tab.active {
@@ -388,14 +394,6 @@
             background: rgba(90, 90, 120, 0.7);
         }
         
-        .sound-group {
-            display: none;
-        }
-        
-        .sound-group.active {
-            display: block;
-        }
-        
         @media (max-width: 768px) {
             h1 {
                 font-size: 1.8rem;
@@ -406,14 +404,14 @@
             }
             
             .horn-triangle {
-                height: 280px;
-                width: 280px;
+                height: 270px;
+                width: 270px;
             }
             
             .horn-btn {
-                width: 85px;
-                height: 85px;
-                font-size: 1rem;
+                width: 80px;
+                height: 80px;
+                font-size: 0.9rem;
             }
             
             .combo-horn {
@@ -422,8 +420,8 @@
             }
             
             .sound-option h4 {
-                font-size: 0.9rem;
-                height: 50px;
+                font-size: 0.85rem;
+                height: 40px;
             }
         }
         
@@ -434,15 +432,15 @@
             }
             
             .horn-btn {
-                width: 75px;
-                height: 75px;
-                font-size: 0.9rem;
-                margin: 5px;
+                width: 70px;
+                height: 70px;
+                font-size: 0.85rem;
+                margin: 6px;
             }
             
             .combo-horn {
-                width: 90px;
-                height: 90px;
+                width: 85px;
+                height: 85px;
             }
             
             .sound-library {
@@ -511,7 +509,7 @@
                 <i class="fas fa-times"></i>
             </button>
             <h2 class="sound-title"><i class="fas fa-music"></i> مكتبة الأصوات</h2>
-            <p style="text-align:center; margin-bottom:15px; color:#ff9800;">اختر صوتًا لكل زر من الأزرار</p>
+            <p style="text-align:center; margin-bottom:12px; color:#ff9800; font-size:0.9rem;">اختر صوتًا لكل زر من الأزرار</p>
             
             <div class="tabs">
                 <div class="tab active" data-tab="low">منخفضة</div>
@@ -536,31 +534,27 @@
     </div>
     
     <script>
-        // مكتبة الأصوات المصرية والسودانية
+        // مكتبة الأصوات المصرية والسودانية (مع روابط موثوقة)
         const soundLibrary = {
             low: [
                 { name: "بوري مصري قديم", url: "https://assets.mixkit.co/sfx/preview/mixkit-truck-horn-715.mp3" },
                 { name: "بوري سوداني عميق", url: "https://assets.mixkit.co/sfx/preview/mixkit-classic-car-horn-1110.mp3" },
-                { name: "بوري شاحنة نقل", url: "https://assets.mixkit.co/sfx/preview/mixkit-vintage-car-horn-1173.mp3" },
-                { name: "بوري حافلة مصرية", url: "https://assets.mixkit.co/sfx/preview/mixkit-bus-horn-715.mp3" }
+                { name: "بوري شاحنة نقل", url: "https://assets.mixkit.co/sfx/preview/mixkit-vintage-car-horn-1173.mp3" }
             ],
             mid: [
                 { name: "بوري تنبيه سوداني", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" },
                 { name: "بوري شاحنة مصرية", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" },
-                { name: "بوري نقل خفيف", url: "https://assets.mixkit.co/sfx/preview/mixkit-retro-car-horn-1241.mp3" },
-                { name: "بوري حافلة سودانية", url: "https://assets.mixkit.co/sfx/preview/mixkit-bus-horn-715.mp3" }
+                { name: "بوري نقل خفيف", url: "https://assets.mixkit.co/sfx/preview/mixkit-retro-car-horn-1241.mp3" }
             ],
             high: [
                 { name: "بوري إنذار مصري", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-alarm-996.mp3" },
                 { name: "بوري سريع سوداني", url: "https://assets.mixkit.co/sfx/preview/mixkit-sports-car-rev-1197.mp3" },
-                { name: "بوري تنبيه عالي", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" },
-                { name: "بوري حاد للمناطق المزدحمة", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" }
+                { name: "بوري تنبيه عالي", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" }
             ],
             combo: [
                 { name: "توليفة مصرية ثلاثية", url: "https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" },
                 { name: "توليفة سودانية مميزة", url: "https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" },
-                { name: "توليفة شاحنة نقل", url: "https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" },
-                { name: "توليفة حافلة ثلاثية", url: "https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" }
+                { name: "مقطوعة سودانية تقليدية", url: "https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" }
             ]
         };
         
@@ -590,6 +584,7 @@
         let globalVolume = 0.7;
         let activeSound = null;
         let soundInterval = null;
+        let isPlaying = false;
         
         // تهيئة سياق الصوت
         function initAudio() {
@@ -604,9 +599,9 @@
         
         // تشغيل الصوت
         function playSound(type) {
-            if (!audioContext) return;
+            if (!audioContext || isPlaying) return;
             
-            // إيقاف أي صوت قيد التشغيل
+            isPlaying = true;
             stopSound();
             
             const sound = currentSounds[type];
@@ -641,27 +636,31 @@
                     // إيقاف الصوت عند انتهائه
                     source.onended = () => {
                         document.getElementById(`${type}Horn`).classList.remove('playing');
+                        isPlaying = false;
                     };
                 })
                 .catch(error => {
                     console.error('خطأ في تحميل الصوت:', error);
                     soundStatus.textContent = "خطأ في تحميل الصوت";
+                    isPlaying = false;
                 });
         }
         
         // تشغيل المقطوعة السودانية
         function playSudaneseMelody() {
-            if (!audioContext) return;
+            if (!audioContext || isPlaying) return;
             
+            isPlaying = true;
             stopSound();
             
             soundStatus.textContent = "تشغيل: مقطوعة سودانية تقليدية";
+            comboHornBtn.classList.add('playing');
             
             // إنشاء مصدر الصوت
             const source = audioContext.createBufferSource();
             
             // جلب ملف الصوت للمقطوعة السودانية
-            fetch("https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3")
+            fetch(currentSounds.combo.url)
                 .then(response => response.arrayBuffer())
                 .then(data => audioContext.decodeAudioData(data))
                 .then(buffer => {
@@ -674,7 +673,6 @@
                     source.start(0);
                     
                     activeSound = source;
-                    comboHornBtn.classList.add('playing');
                     
                     // اهتزاز الجهاز إذا كان مدعومًا
                     if (navigator.vibrate) {
@@ -684,11 +682,13 @@
                     // إيقاف الصوت عند انتهائه
                     source.onended = () => {
                         comboHornBtn.classList.remove('playing');
+                        isPlaying = false;
                     };
                 })
                 .catch(error => {
                     console.error('خطأ في تحميل الصوت:', error);
                     soundStatus.textContent = "خطأ في تحميل الصوت";
+                    isPlaying = false;
                 });
         }
         
@@ -705,10 +705,7 @@
                 soundInterval = null;
             }
             
-            // تحديث الواجهة
-            document.querySelectorAll('.horn-btn').forEach(btn => {
-                btn.classList.remove('playing');
-            });
+            isPlaying = false;
         }
         
         // تشغيل الصوت المستمر
@@ -717,7 +714,9 @@
             
             // تكرار الصوت كل 1.5 ثانية للاستمرارية
             soundInterval = setInterval(() => {
-                playSound(type);
+                if (!isPlaying) {
+                    playSound(type);
+                }
             }, 1500);
         }
         
@@ -779,6 +778,20 @@
             highHornBtn.addEventListener('mouseleave', stopSound);
             
             comboHornBtn.addEventListener('mousedown', playSudaneseMelody);
+            comboHornBtn.addEventListener('mouseup', stopSound);
+            comboHornBtn.addEventListener('mouseleave', stopSound);
+            
+            // أحداث لوحة المفاتيح
+            document.addEventListener('keydown', (e) => {
+                if (e.key === '1') playContinuousSound('high');
+                if (e.key === '2') playContinuousSound('mid');
+                if (e.key === '3') playContinuousSound('low');
+                if (e.key === '4') playSudaneseMelody();
+            });
+            
+            document.addEventListener('keyup', (e) => {
+                if (['1','2','3','4'].includes(e.key)) stopSound();
+            });
             
             // التحكم في مستوى الصوت
             volumeSlider.addEventListener('input', () => {
@@ -817,4 +830,4 @@
         window.addEventListener('load', initApp);
     </script>
 </body>
-    </html>
+                    </html>
