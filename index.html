@@ -534,7 +534,7 @@
     </div>
     
     <script>
-        // مكتبة الأصوات المصرية والسودانية (مع روابط موثوقة)
+        // مكتبة الأصوات المصرية والسودانية
         const soundLibrary = {
             low: [
                 { name: "بوري مصري قديم", url: "https://assets.mixkit.co/sfx/preview/mixkit-truck-horn-715.mp3" },
@@ -580,123 +580,66 @@
         const tabs = document.querySelectorAll('.tab');
         
         // عناصر الصوت
-        let audioContext;
-        let globalVolume = 0.7;
+        let audioElements = {};
         let activeSound = null;
         let soundInterval = null;
-        let isPlaying = false;
+        let globalVolume = 0.7;
         
-        // تهيئة سياق الصوت
-        function initAudio() {
-            try {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                soundStatus.textContent = "حالة الصوت: جاهز";
-            } catch (e) {
-                soundStatus.textContent = "حالة الصوت: غير متاح - يرجى تحديث المتصفح";
-                console.error("Web Audio API غير مدعوم", e);
+        // تهيئة الأصوات
+        function initSounds() {
+            // إنشاء عناصر صوتية لكل نوع
+            for (const type in currentSounds) {
+                audioElements[type] = new Audio();
+                audioElements[type].src = currentSounds[type].url;
+                audioElements[type].volume = globalVolume;
+                audioElements[type].preload = "auto";
             }
+            
+            soundStatus.textContent = "حالة الصوت: جاهز";
         }
         
         // تشغيل الصوت
         function playSound(type) {
-            if (!audioContext || isPlaying) return;
-            
-            isPlaying = true;
+            // إيقاف أي صوت قيد التشغيل
             stopSound();
             
-            const sound = currentSounds[type];
-            soundStatus.textContent = `تشغيل: ${sound.name}`;
+            // تحديث مصدر الصوت إذا تغير
+            if (audioElements[type].src !== currentSounds[type].url) {
+                audioElements[type].src = currentSounds[type].url;
+            }
             
-            // إنشاء مصدر الصوت
-            const source = audioContext.createBufferSource();
+            // ضبط مستوى الصوت
+            audioElements[type].volume = globalVolume;
             
-            // جلب ملف الصوت
-            fetch(sound.url)
-                .then(response => response.arrayBuffer())
-                .then(data => audioContext.decodeAudioData(data))
-                .then(buffer => {
-                    source.buffer = buffer;
-                    const gainNode = audioContext.createGain();
-                    gainNode.gain.value = globalVolume;
-                    
-                    source.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    source.start(0);
-                    
-                    activeSound = source;
-                    
-                    // تحديث الواجهة
+            // تشغيل الصوت
+            audioElements[type].play()
+                .then(() => {
+                    soundStatus.textContent = `تشغيل: ${currentSounds[type].name}`;
                     document.getElementById(`${type}Horn`).classList.add('playing');
                     
                     // اهتزاز الجهاز إذا كان مدعومًا
                     if (navigator.vibrate) {
                         navigator.vibrate(100);
                     }
-                    
-                    // إيقاف الصوت عند انتهائه
-                    source.onended = () => {
-                        document.getElementById(`${type}Horn`).classList.remove('playing');
-                        isPlaying = false;
-                    };
                 })
                 .catch(error => {
-                    console.error('خطأ في تحميل الصوت:', error);
-                    soundStatus.textContent = "خطأ في تحميل الصوت";
-                    isPlaying = false;
+                    console.error('خطأ في تشغيل الصوت:', error);
+                    soundStatus.textContent = "خطأ: يرجى النقر على الشاشة أولا";
                 });
         }
         
         // تشغيل المقطوعة السودانية
         function playSudaneseMelody() {
-            if (!audioContext || isPlaying) return;
-            
-            isPlaying = true;
-            stopSound();
-            
-            soundStatus.textContent = "تشغيل: مقطوعة سودانية تقليدية";
-            comboHornBtn.classList.add('playing');
-            
-            // إنشاء مصدر الصوت
-            const source = audioContext.createBufferSource();
-            
-            // جلب ملف الصوت للمقطوعة السودانية
-            fetch(currentSounds.combo.url)
-                .then(response => response.arrayBuffer())
-                .then(data => audioContext.decodeAudioData(data))
-                .then(buffer => {
-                    source.buffer = buffer;
-                    const gainNode = audioContext.createGain();
-                    gainNode.gain.value = globalVolume;
-                    
-                    source.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    source.start(0);
-                    
-                    activeSound = source;
-                    
-                    // اهتزاز الجهاز إذا كان مدعومًا
-                    if (navigator.vibrate) {
-                        navigator.vibrate(300);
-                    }
-                    
-                    // إيقاف الصوت عند انتهائه
-                    source.onended = () => {
-                        comboHornBtn.classList.remove('playing');
-                        isPlaying = false;
-                    };
-                })
-                .catch(error => {
-                    console.error('خطأ في تحميل الصوت:', error);
-                    soundStatus.textContent = "خطأ في تحميل الصوت";
-                    isPlaying = false;
-                });
+            playSound('combo');
         }
         
         // إيقاف الصوت
         function stopSound() {
-            if (activeSound) {
-                activeSound.stop();
-                activeSound = null;
+            // إيقاف جميع الأصوات
+            for (const type in audioElements) {
+                audioElements[type].pause();
+                audioElements[type].currentTime = 0;
+                document.getElementById(`${type}Horn`).classList.remove('playing');
             }
             
             // إيقاف أي إنترفال للصوت المستمر
@@ -704,8 +647,6 @@
                 clearInterval(soundInterval);
                 soundInterval = null;
             }
-            
-            isPlaying = false;
         }
         
         // تشغيل الصوت المستمر
@@ -714,9 +655,7 @@
             
             // تكرار الصوت كل 1.5 ثانية للاستمرارية
             soundInterval = setInterval(() => {
-                if (!isPlaying) {
-                    playSound(type);
-                }
+                playSound(type);
             }, 1500);
         }
         
@@ -736,6 +675,7 @@
                 `;
                 soundEl.addEventListener('click', () => {
                     currentSounds[type] = sound;
+                    audioElements[type].src = sound.url;
                     createSoundLibrary(type);
                 });
                 
@@ -761,7 +701,7 @@
         
         // تهيئة التطبيق
         function initApp() {
-            initAudio();
+            initSounds();
             createSoundLibrary();
             
             // أحداث الأزرار
@@ -796,6 +736,9 @@
             // التحكم في مستوى الصوت
             volumeSlider.addEventListener('input', () => {
                 globalVolume = parseFloat(volumeSlider.value);
+                for (const type in audioElements) {
+                    audioElements[type].volume = globalVolume;
+                }
             });
             
             // إظهار/إخفاء لوحة الإعدادات
@@ -816,13 +759,16 @@
                 });
             });
             
-            // استعادة سياق الصوت عند النقر
-            document.body.addEventListener('click', () => {
-                if (audioContext && audioContext.state === 'suspended') {
-                    audioContext.resume().then(() => {
-                        soundStatus.textContent = "حالة الصوت: جاهز";
-                    });
-                }
+            // حل مشكلة تشغيل الصوت عند النقر الأول
+            document.body.addEventListener('click', function initAudioFirstTime() {
+                // تشغيل صوت صامت لتفعيل الصوت في المتصفح
+                const silentAudio = new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAA");
+                silentAudio.play().then(() => {
+                    silentAudio.remove();
+                }).catch(e => console.log(e));
+                
+                // إزالة المستمع بعد الاستخدام
+                document.body.removeEventListener('click', initAudioFirstTime);
             });
         }
         
@@ -830,4 +776,4 @@
         window.addEventListener('load', initApp);
     </script>
 </body>
-                    </html>
+    </html>
