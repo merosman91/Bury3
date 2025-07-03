@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محاكاة بوري 3 - أبواق هوائية ثلاثية النغمات</title>
+    <title>بوري 3 - محاكاة أبواق الشاحنات المصرية والسودانية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -32,15 +32,16 @@
         header {
             text-align: center;
             padding: 20px 0;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             background: rgba(0, 0, 0, 0.4);
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             width: 100%;
+            position: relative;
         }
         
         h1 {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             margin-bottom: 10px;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
             background: linear-gradient(to right, #ffd700, #ff8c00);
@@ -50,48 +51,38 @@
         }
         
         .subtitle {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #e0e0e0;
             max-width: 800px;
             margin: 0 auto;
             line-height: 1.6;
         }
         
-        .app-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
-        }
-        
-        .horn-controls {
-            flex: 1;
-            min-width: 300px;
-            background: rgba(30, 30, 40, 0.85);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        /* تصميم الأزرار على شكل مثلث */
+        .horn-triangle {
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            align-items: center;
+            position: relative;
+            height: 300px;
+            margin: 40px auto;
+            width: 300px;
         }
         
-        .controls-title {
-            text-align: center;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: #ff9800;
-            border-bottom: 2px solid #ff5722;
-            padding-bottom: 10px;
+        .triangle-row {
+            display: flex;
+            justify-content: center;
+            width: 100%;
         }
         
         .horn-btn {
             background: linear-gradient(to bottom, #3a7bd5, #2c3e50);
             color: white;
             border: none;
-            border-radius: 50px;
-            padding: 25px 10px;
-            font-size: 1.4rem;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -99,111 +90,103 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 10px;
             position: relative;
             overflow: hidden;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            margin: 5px;
+            z-index: 10;
         }
         
         .horn-btn:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.05);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
         
         .horn-btn:active {
-            transform: translateY(2px);
+            transform: translateY(2px) scale(0.95);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
         
         .horn-btn i {
-            font-size: 2.5rem;
+            font-size: 2rem;
+            margin-bottom: 5px;
         }
         
-        .low-horn { background: linear-gradient(to bottom, #3a7bd5, #1e3c72); }
-        .mid-horn { background: linear-gradient(to bottom, #d5763a, #a04824); }
-        .high-horn { background: linear-gradient(to bottom, #d53a7b, #721e3c); }
-        .combo-horn { background: linear-gradient(to bottom, #7b3ad5, #3c1e72); }
+        .low-horn { 
+            background: linear-gradient(to bottom, #3a7bd5, #1e3c72); 
+            transform: translateX(0);
+        }
+        .mid-horn { 
+            background: linear-gradient(to bottom, #d5763a, #a04824); 
+            transform: translateY(0);
+        }
+        .high-horn { 
+            background: linear-gradient(to bottom, #d53a7b, #721e3c); 
+            transform: translateX(0);
+        }
+        .combo-horn { 
+            background: linear-gradient(to bottom, #7b3ad5, #3c1e72); 
+            width: 120px;
+            height: 120px;
+            z-index: 20;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
         
         .key-hint {
             position: absolute;
             top: 10px;
             right: 15px;
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            padding: 5px 10px;
-            font-size: 1rem;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
         }
         
-        .info-panel {
-            flex: 1;
-            min-width: 300px;
+        .controls-panel {
             background: rgba(30, 30, 40, 0.85);
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-        
-        .info-title {
-            font-size: 1.8rem;
-            color: #4caf50;
-            margin-bottom: 20px;
-            text-align: center;
-            border-bottom: 2px solid #4caf50;
-            padding-bottom: 10px;
-        }
-        
-        .features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .feature {
-            background: rgba(70, 70, 90, 0.6);
-            border-radius: 10px;
-            padding: 15px;
-            flex: 1;
-            min-width: 200px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .feature i {
-            font-size: 1.8rem;
-            color: #ff9800;
-        }
-        
-        .feature-text h3 {
-            color: #ffd700;
-            margin-bottom: 5px;
-        }
-        
-        .instructions {
-            background: rgba(70, 70, 90, 0.6);
-            border-radius: 10px;
-            padding: 20px;
             margin-top: 20px;
         }
         
-        .instructions h3 {
-            color: #4caf50;
-            margin-bottom: 15px;
+        .sound-library {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .sound-option {
+            background: rgba(70, 70, 90, 0.6);
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
             text-align: center;
         }
         
-        .instructions ul {
-            padding-right: 20px;
-            line-height: 1.8;
+        .sound-option:hover {
+            background: rgba(90, 90, 120, 0.7);
+            transform: translateY(-3px);
         }
         
-        .instructions li {
-            margin-bottom: 10px;
+        .sound-option.selected {
+            background: linear-gradient(to right, #ff8c00, #ffd700);
+            color: #222;
+            font-weight: bold;
         }
         
-        .instructions li strong {
-            color: #ff9800;
+        .sound-option h4 {
+            margin-bottom: 8px;
+            font-size: 1.1rem;
         }
         
         .volume-control {
@@ -246,13 +229,13 @@
             background: rgba(0, 0, 0, 0.4);
             border-radius: 15px;
             width: 100%;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         
         .truck-animation {
             width: 100%;
-            height: 120px;
-            margin-top: 30px;
+            height: 100px;
+            margin-top: 20px;
             position: relative;
             overflow: hidden;
             border-radius: 10px;
@@ -264,27 +247,13 @@
             left: -200px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 4rem;
+            font-size: 3.5rem;
             animation: drive 15s linear infinite;
         }
         
         @keyframes drive {
             0% { left: -200px; }
             100% { left: 100%; }
-        }
-        
-        @media (max-width: 768px) {
-            .app-container {
-                flex-direction: column;
-            }
-            
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .subtitle {
-                font-size: 1.1rem;
-            }
         }
         
         .active {
@@ -297,7 +266,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 30px;
+            height: 10px;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             opacity: 0;
             transition: opacity 0.3s;
@@ -321,121 +290,132 @@
             margin-top: 10px;
             font-size: 0.9rem;
         }
+        
+        .sound-title {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #ff9800;
+            margin: 20px 0 10px;
+            border-bottom: 2px solid #ff5722;
+            padding-bottom: 10px;
+        }
+        
+        .settings-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 152, 0, 0.7);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .settings-btn:hover {
+            transform: rotate(30deg) scale(1.1);
+            background: rgba(255, 152, 0, 0.9);
+        }
+        
+        .settings-panel {
+            background: rgba(30, 30, 50, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .horn-btn {
+                width: 80px;
+                height: 80px;
+                font-size: 1rem;
+            }
+            
+            .combo-horn {
+                width: 100px;
+                height: 100px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
+            <button class="settings-btn" id="settingsBtn">
+                <i class="fas fa-cog"></i>
+            </button>
             <h1><i class="fas fa-truck-moving"></i> محاكاة بوري 3</h1>
-            <p class="subtitle">تطبيق ويب لمحاكاة نظام الأبواق الهوائية ثلاثية النغمات المستخدم في الشاحنات والحافلات الكبيرة. اضغط على الأزرار لتشغيل نغمات مختلفة وإنشاء توليفات صوتية مميزة!</p>
+            <p class="subtitle">تطبيق محاكاة أبواق الشاحنات المصرية والسودانية - اختر أصواتك المفضلة واضغط على الأزرار</p>
         </header>
         
-        <div class="app-container">
-            <div class="horn-controls">
-                <h2 class="controls-title"><i class="fas fa-sliders-h"></i> لوحة التحكم بالأبواق</h2>
-                
-                <button class="horn-btn low-horn" id="lowHorn">
-                    <i class="fas fa-volume-down"></i>
-                    النغمة المنخفضة
-                    <span class="key-hint">(1)</span>
-                    <span>صوت جهوري عميق</span>
-                    <div class="sound-wave"></div>
-                </button>
-                
-                <button class="horn-btn mid-horn" id="midHorn">
-                    <i class="fas fa-volume"></i>
-                    النغمة المتوسطة
-                    <span class="key-hint">(2)</span>
-                    <span>صوت تنبيه قوي</span>
-                    <div class="sound-wave"></div>
-                </button>
-                
-                <button class="horn-btn high-horn" id="highHorn">
+        <!-- تصميم الأزرار على شكل مثلث -->
+        <div class="horn-triangle">
+            <div class="triangle-row">
+                <button class="horn-btn high-horn" id="highHorn" data-type="high">
                     <i class="fas fa-volume-up"></i>
-                    النغمة الحادة
-                    <span class="key-hint">(3)</span>
-                    <span>صوت إنذار عالي</span>
+                    حادة
+                    <span class="key-hint">1</span>
                     <div class="sound-wave"></div>
                 </button>
-                
-                <button class="horn-btn combo-horn" id="comboHorn">
-                    <i class="fas fa-random"></i>
-                    توليفة ثلاثية
-                    <span class="key-hint">(4)</span>
-                    <span>نغمة مميزة قوية</span>
-                    <div class="sound-wave"></div>
-                </button>
-                
-                <div class="volume-control">
-                    <i class="fas fa-volume-up"></i>
-                    <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.7">
-                    <i class="fas fa-volume-down"></i>
-                </div>
-                
-                <div class="status" id="soundStatus">حالة الصوت: جاهز</div>
             </div>
             
-            <div class="info-panel">
-                <h2 class="info-title"><i class="fas fa-info-circle"></i> عن نظام بوري 3</h2>
+            <div class="triangle-row">
+                <button class="horn-btn mid-horn" id="midHorn" data-type="mid">
+                    <i class="fas fa-volume"></i>
+                    متوسطة
+                    <span class="key-hint">2</span>
+                    <div class="sound-wave"></div>
+                </button>
                 
-                <div class="features">
-                    <div class="feature">
-                        <i class="fas fa-air-freshener"></i>
-                        <div class="feature-text">
-                            <h3>نظام هوائي ثلاثي</h3>
-                            <p>يعتمد على ضاغط هواء وثلاثة أبواق نحاسية</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature">
-                        <i class="fas fa-sliders-h"></i>
-                        <div class="feature-text">
-                            <h3>ثلاث مفاتيح تحكم</h3>
-                            <p>زر لكل بوق لإنشاء نغمات مختلفة</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature">
-                        <i class="fas fa-volume"></i>
-                        <div class="feature-text">
-                            <h3>صوت عالي الشدة</h3>
-                            <p>يصل إلى 150 ديسيبل للتنبيه في الطرق الطويلة</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature">
-                        <i class="fas fa-truck"></i>
-                        <div class="feature-text">
-                            <h3>استخدامات متعددة</h3>
-                            <p>للشاحنات والحافلات والقطارات</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="instructions">
-                    <h3><i class="fas fa-book"></i> طريقة الاستخدام</h3>
-                    <ul>
-                        <li>استخدم الأزرار أو مفاتيح <strong>1, 2, 3, 4</strong> لتشغيل الأبواق</li>
-                        <li>اضغط على الزر مستمراً لاستمرار الصوت كما في النظام الحقيقي</li>
-                        <li>جرب الضغط على عدة أزرار معاً لإنشاء توليفات صوتية جديدة</li>
-                        <li>استخدم المنزلق لضبط مستوى الصوت</li>
-                        <li>النغمة المنخفضة: للتنبيه العام والإشارة لبدء الحركة</li>
-                        <li>النغمة المتوسطة: لتنبيه السيارات القريبة</li>
-                        <li>النغمة الحادة: لتفادي الاصطدامات الطارئة</li>
-                        <li>التوليفة الثلاثية: للإشارة في الزحام وطلب فتح الطريق</li>
-                    </ul>
-                </div>
-                
-                <div class="instructions">
-                    <h3><i class="fas fa-tools"></i> حل مشاكل الصوت</h3>
-                    <ul>
-                        <li>تأكد من عدم كتم الصوت في متصفحك</li>
-                        <li>اضغط على أيقونة الصوت الصغيرة في شريط العناوين</li>
-                        <li>جرب استخدام متصفح آخر مثل Chrome أو Firefox</li>
-                        <li>تأكد من تشغيل السماعات</li>
-                        <li>اضبط مستوى الصوت باستخدام المنزلق</li>
-                    </ul>
-                </div>
+                <button class="horn-btn low-horn" id="lowHorn" data-type="low">
+                    <i class="fas fa-volume-down"></i>
+                    منخفضة
+                    <span class="key-hint">3</span>
+                    <div class="sound-wave"></div>
+                </button>
+            </div>
+            
+            <button class="horn-btn combo-horn" id="comboHorn" data-type="combo">
+                <i class="fas fa-random"></i>
+                ثلاثية
+                <span class="key-hint">4</span>
+                <div class="sound-wave"></div>
+            </button>
+        </div>
+        
+        <div class="controls-panel">
+            <div class="volume-control">
+                <i class="fas fa-volume-up"></i>
+                <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.7">
+                <i class="fas fa-volume-down"></i>
+            </div>
+            
+            <div class="status" id="soundStatus">حالة الصوت: جاهز</div>
+        </div>
+        
+        <div class="settings-panel" id="settingsPanel">
+            <h2 class="sound-title"><i class="fas fa-music"></i> مكتبة الأصوات</h2>
+            <p style="text-align:center; margin-bottom:15px; color:#ff9800;">اختر صوتًا لكل زر من الأزرار</p>
+            
+            <div class="sound-library" id="soundLibrary">
+                <!-- سيتم ملء مكتبة الأصوات بواسطة الجافاسكريبت -->
             </div>
         </div>
         
@@ -444,41 +424,46 @@
         </div>
         
         <div class="footer">
-            <p>تطبيق محاكاة بوري 3 - نظام الأبواق الهوائية ثلاثية النغمات | تم التطوير باستخدام HTML5 وCSS3 وJavaScript</p>
+            <p>تطبيق محاكاة بوري 3 - أبواق الشاحنات المصرية والسودانية | اضغط باستمرار للصوت المستمر</p>
             <p>يمكنك استخدام هذا التطبيق للتدرب على الأصوات أو للترفيه - يوصى باستخدام السماعات</p>
         </div>
     </div>
     
     <script>
-        // إنشاء سياق الصوت
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        let globalVolume = 0.7;
+        // مكتبة الأصوات المصرية والسودانية
+        const soundLibrary = {
+            low: [
+                { name: "بوري مصري قديم", url: "https://assets.mixkit.co/sfx/preview/mixkit-truck-horn-715.mp3" },
+                { name: "بوري سوداني عميق", url: "https://assets.mixkit.co/sfx/preview/mixkit-classic-car-horn-1110.mp3" },
+                { name: "بوري شاحنة نقل", url: "https://assets.mixkit.co/sfx/preview/mixkit-vintage-car-horn-1173.mp3" },
+                { name: "بوري حافلة مصرية", url: "https://assets.mixkit.co/sfx/preview/mixkit-bus-horn-715.mp3" }
+            ],
+            mid: [
+                { name: "بوري تنبيه سوداني", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" },
+                { name: "بوري شاحنة مصرية", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" },
+                { name: "بوري نقل خفيف", url: "https://assets.mixkit.co/sfx/preview/mixkit-retro-car-horn-1241.mp3" },
+                { name: "بوري حافلة سودانية", url: "https://assets.mixkit.co/sfx/preview/mixkit-bus-horn-715.mp3" }
+            ],
+            high: [
+                { name: "بوري إنذار مصري", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-alarm-996.mp3" },
+                { name: "بوري سريع سوداني", url: "https://assets.mixkit.co/sfx/preview/mixkit-sports-car-rev-1197.mp3" },
+                { name: "بوري تنبيه عالي", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" },
+                { name: "بوري حاد للمناطق المزدحمة", url: "https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3" }
+            ],
+            combo: [
+                { name: "توليفة مصرية ثلاثية", url: "https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" },
+                { name: "توليفة سودانية مميزة", url: "https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" },
+                { name: "توليفة شاحنة نقل", url: "https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" },
+                { name: "توليفة حافلة ثلاثية", url: "https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3" }
+            ]
+        };
         
-        // إنشاء الأصوات باستخدام مولدات التردد
-        function createHornSound(freq1, freq2, freq3, duration) {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.type = 'sawtooth';
-            oscillator.frequency.setValueAtTime(freq1, audioContext.currentTime);
-            oscillator.frequency.setValueAtTime(freq2, audioContext.currentTime + duration * 0.3);
-            oscillator.frequency.setValueAtTime(freq3, audioContext.currentTime + duration * 0.7);
-            
-            gainNode.gain.setValueAtTime(globalVolume, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            return oscillator;
-        }
-        
-        // تعريف الأصوات
-        const sounds = {
-            low: () => createHornSound(110, 120, 115, 1.5),
-            mid: () => createHornSound(220, 240, 230, 1.0),
-            high: () => createHornSound(440, 480, 460, 0.8),
-            combo: () => createHornSound(110, 220, 440, 2.0)
+        // الأصوات المحددة حالياً
+        let currentSounds = {
+            low: soundLibrary.low[0],
+            mid: soundLibrary.mid[0],
+            high: soundLibrary.high[0],
+            combo: soundLibrary.combo[0]
         };
         
         // عناصر التحكم
@@ -488,121 +473,265 @@
         const comboHornBtn = document.getElementById('comboHorn');
         const volumeSlider = document.getElementById('volumeSlider');
         const soundStatus = document.getElementById('soundStatus');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const soundLibraryContainer = document.getElementById('soundLibrary');
         
-        // متغيرات لتتبع حالة التشغيل
-        let activeSounds = {
-            low: null,
-            mid: null,
-            high: null,
-            combo: null
-        };
+        // عناصر الصوت
+        let audioContext;
+        let globalVolume = 0.7;
+        let activeSound = null;
+        let soundInterval = null;
         
-        // أحداث الأزرار
-        lowHornBtn.addEventListener('mousedown', () => playHorn('low'));
-        lowHornBtn.addEventListener('mouseup', () => stopHorn('low'));
-        lowHornBtn.addEventListener('mouseleave', () => stopHorn('low'));
-        
-        midHornBtn.addEventListener('mousedown', () => playHorn('mid'));
-        midHornBtn.addEventListener('mouseup', () => stopHorn('mid'));
-        midHornBtn.addEventListener('mouseleave', () => stopHorn('mid'));
-        
-        highHornBtn.addEventListener('mousedown', () => playHorn('high'));
-        highHornBtn.addEventListener('mouseup', () => stopHorn('high'));
-        highHornBtn.addEventListener('mouseleave', () => stopHorn('high'));
-        
-        comboHornBtn.addEventListener('mousedown', () => playHorn('combo'));
-        comboHornBtn.addEventListener('mouseup', () => stopHorn('combo'));
-        comboHornBtn.addEventListener('mouseleave', () => stopHorn('combo'));
-        
-        // أحداث لوحة المفاتيح
-        document.addEventListener('keydown', (e) => {
-            if (e.key === '1') playHorn('low');
-            if (e.key === '2') playHorn('mid');
-            if (e.key === '3') playHorn('high');
-            if (e.key === '4') playHorn('combo');
-        });
-        
-        document.addEventListener('keyup', (e) => {
-            if (e.key === '1') stopHorn('low');
-            if (e.key === '2') stopHorn('mid');
-            if (e.key === '3') stopHorn('high');
-            if (e.key === '4') stopHorn('combo');
-        });
-        
-        // التحكم في مستوى الصوت
-        volumeSlider.addEventListener('input', () => {
-            globalVolume = parseFloat(volumeSlider.value);
-        });
-        
-        // وظيفة تشغيل البوق
-        function playHorn(type) {
-            // إيقاف الصوت الحالي إن وجد
-            if (activeSounds[type]) {
-                stopHorn(type);
-            }
-            
-            // تشغيل الصوت الجديد
-            activeSounds[type] = sounds[type]();
-            activeSounds[type].start();
-            
-            // تحديث الواجهة
-            document.getElementById(`${type}Horn`).classList.add('active', 'playing');
-            soundStatus.textContent = `حالة الصوت: تشغيل ${getHornName(type)}`;
-            
-            // اهتزاز الجهاز إذا كان مدعومًا
-            if (navigator.vibrate) {
-                navigator.vibrate(100);
+        // تهيئة سياق الصوت
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                soundStatus.textContent = "حالة الصوت: جاهز";
+            } catch (e) {
+                soundStatus.textContent = "حالة الصوت: غير متاح - يرجى تحديث المتصفح";
+                console.error("Web Audio API غير مدعوم", e);
             }
         }
         
-        // وظيفة إيقاف البوق
-        function stopHorn(type) {
-            if (activeSounds[type]) {
-                // إيقاف الصوت تدريجيًا
-                const gainNode = activeSounds[type].context.createGain();
-                activeSounds[type].connect(gainNode);
-                gainNode.connect(activeSounds[type].context.destination);
-                gainNode.gain.setValueAtTime(gainNode.gain.value, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
-                
-                // إيقاف المولد بعد فترة
-                setTimeout(() => {
-                    if (activeSounds[type]) {
-                        activeSounds[type].stop();
-                        activeSounds[type] = null;
+        // تشغيل الصوت
+        function playSound(type) {
+            if (!audioContext) return;
+            
+            // إيقاف أي صوت قيد التشغيل
+            stopSound();
+            
+            const sound = currentSounds[type];
+            soundStatus.textContent = `تشغيل: ${sound.name}`;
+            
+            // إنشاء مصدر الصوت
+            const source = audioContext.createBufferSource();
+            
+            // جلب ملف الصوت
+            fetch(sound.url)
+                .then(response => response.arrayBuffer())
+                .then(data => audioContext.decodeAudioData(data))
+                .then(buffer => {
+                    source.buffer = buffer;
+                    const gainNode = audioContext.createGain();
+                    gainNode.gain.value = globalVolume;
+                    
+                    source.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    source.start(0);
+                    
+                    activeSound = source;
+                    
+                    // تحديث الواجهة
+                    document.getElementById(`${type}Horn`).classList.add('playing');
+                    
+                    // اهتزاز الجهاز إذا كان مدعومًا
+                    if (navigator.vibrate) {
+                        navigator.vibrate(100);
                     }
-                }, 300);
+                })
+                .catch(error => {
+                    console.error('خطأ في تحميل الصوت:', error);
+                    soundStatus.textContent = "خطأ في تحميل الصوت";
+                });
+        }
+        
+        // إيقاف الصوت
+        function stopSound() {
+            if (activeSound) {
+                activeSound.stop();
+                activeSound = null;
+            }
+            
+            // إيقاف أي إنترفال للصوت المستمر
+            if (soundInterval) {
+                clearInterval(soundInterval);
+                soundInterval = null;
             }
             
             // تحديث الواجهة
-            document.getElementById(`${type}Horn`).classList.remove('active', 'playing');
-            soundStatus.textContent = "حالة الصوت: جاهز";
+            document.querySelectorAll('.horn-btn').forEach(btn => {
+                btn.classList.remove('playing');
+            });
         }
         
-        // وظيفة مساعدة للحصول على اسم البوق
-        function getHornName(type) {
-            const names = {
-                low: "النغمة المنخفضة",
-                mid: "النغمة المتوسطة",
-                high: "النغمة الحادة",
-                combo: "التوليفة الثلاثية"
-            };
-            return names[type] || type;
+        // تشغيل الصوت المستمر
+        function playContinuousSound(type) {
+            playSound(type);
+            
+            // تكرار الصوت كل 1.5 ثانية للاستمرارية
+            soundInterval = setInterval(() => {
+                playSound(type);
+            }, 1500);
         }
         
-        // استعادة سياق الصوت عند النقر
-        document.body.addEventListener('click', () => {
-            if (audioContext.state === 'suspended') {
-                audioContext.resume().then(() => {
-                    soundStatus.textContent = "حالة الصوت: جاهز";
+        // إنشاء مكتبة الأصوات
+        function createSoundLibrary() {
+            soundLibraryContainer.innerHTML = '';
+            
+            // أصوات النغمة المنخفضة
+            const lowGroup = document.createElement('div');
+            lowGroup.innerHTML = `<h3 style="color:#3a7bd5; grid-column:1/-1;">أصوات النغمة المنخفضة</h3>`;
+            soundLibrary.low.forEach((sound, index) => {
+                const isSelected = currentSounds.low === sound;
+                const soundEl = document.createElement('div');
+                soundEl.className = `sound-option ${isSelected ? 'selected' : ''}`;
+                soundEl.innerHTML = `
+                    <h4>${sound.name}</h4>
+                    <button class="play-sample" data-type="low" data-index="${index}">
+                        <i class="fas fa-play"></i> تجربة
+                    </button>
+                `;
+                soundEl.addEventListener('click', () => {
+                    currentSounds.low = sound;
+                    createSoundLibrary();
                 });
-            }
-        });
+                lowGroup.appendChild(soundEl);
+            });
+            soundLibraryContainer.appendChild(lowGroup);
+            
+            // أصوات النغمة المتوسطة
+            const midGroup = document.createElement('div');
+            midGroup.innerHTML = `<h3 style="color:#d5763a; grid-column:1/-1;">أصوات النغمة المتوسطة</h3>`;
+            soundLibrary.mid.forEach((sound, index) => {
+                const isSelected = currentSounds.mid === sound;
+                const soundEl = document.createElement('div');
+                soundEl.className = `sound-option ${isSelected ? 'selected' : ''}`;
+                soundEl.innerHTML = `
+                    <h4>${sound.name}</h4>
+                    <button class="play-sample" data-type="mid" data-index="${index}">
+                        <i class="fas fa-play"></i> تجربة
+                    </button>
+                `;
+                soundEl.addEventListener('click', () => {
+                    currentSounds.mid = sound;
+                    createSoundLibrary();
+                });
+                midGroup.appendChild(soundEl);
+            });
+            soundLibraryContainer.appendChild(midGroup);
+            
+            // أصوات النغمة الحادة
+            const highGroup = document.createElement('div');
+            highGroup.innerHTML = `<h3 style="color:#d53a7b; grid-column:1/-1;">أصوات النغمة الحادة</h3>`;
+            soundLibrary.high.forEach((sound, index) => {
+                const isSelected = currentSounds.high === sound;
+                const soundEl = document.createElement('div');
+                soundEl.className = `sound-option ${isSelected ? 'selected' : ''}`;
+                soundEl.innerHTML = `
+                    <h4>${sound.name}</h4>
+                    <button class="play-sample" data-type="high" data-index="${index}">
+                        <i class="fas fa-play"></i> تجربة
+                    </button>
+                `;
+                soundEl.addEventListener('click', () => {
+                    currentSounds.high = sound;
+                    createSoundLibrary();
+                });
+                highGroup.appendChild(soundEl);
+            });
+            soundLibraryContainer.appendChild(highGroup);
+            
+            // أصوات التوليفة الثلاثية
+            const comboGroup = document.createElement('div');
+            comboGroup.innerHTML = `<h3 style="color:#7b3ad5; grid-column:1/-1;">أصوات التوليفة الثلاثية</h3>`;
+            soundLibrary.combo.forEach((sound, index) => {
+                const isSelected = currentSounds.combo === sound;
+                const soundEl = document.createElement('div');
+                soundEl.className = `sound-option ${isSelected ? 'selected' : ''}`;
+                soundEl.innerHTML = `
+                    <h4>${sound.name}</h4>
+                    <button class="play-sample" data-type="combo" data-index="${index}">
+                        <i class="fas fa-play"></i> تجربة
+                    </button>
+                `;
+                soundEl.addEventListener('click', () => {
+                    currentSounds.combo = sound;
+                    createSoundLibrary();
+                });
+                comboGroup.appendChild(soundEl);
+            });
+            soundLibraryContainer.appendChild(comboGroup);
+            
+            // إضافة أحداث لأزرار التجربة
+            document.querySelectorAll('.play-sample').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const type = btn.dataset.type;
+                    const index = parseInt(btn.dataset.index);
+                    
+                    // حفظ الصوت الحالي مؤقتاً
+                    const tempSound = currentSounds[type];
+                    
+                    // تشغيل الصوت المحدد
+                    currentSounds[type] = soundLibrary[type][index];
+                    playSound(type);
+                    
+                    // إعادة الصوت الأصلي بعد التشغيل
+                    setTimeout(() => {
+                        currentSounds[type] = tempSound;
+                    }, 2000);
+                });
+            });
+        }
         
-        // رسالة ترحيبية
-        window.addEventListener('load', () => {
-            soundStatus.textContent = "حالة الصوت: جاهز - اضغط على أي زر لتشغيل الصوت";
-        });
+        // تهيئة التطبيق
+        function initApp() {
+            initAudio();
+            createSoundLibrary();
+            
+            // أحداث الأزرار
+            lowHornBtn.addEventListener('mousedown', () => playContinuousSound('low'));
+            lowHornBtn.addEventListener('mouseup', stopSound);
+            lowHornBtn.addEventListener('mouseleave', stopSound);
+            
+            midHornBtn.addEventListener('mousedown', () => playContinuousSound('mid'));
+            midHornBtn.addEventListener('mouseup', stopSound);
+            midHornBtn.addEventListener('mouseleave', stopSound);
+            
+            highHornBtn.addEventListener('mousedown', () => playContinuousSound('high'));
+            highHornBtn.addEventListener('mouseup', stopSound);
+            highHornBtn.addEventListener('mouseleave', stopSound);
+            
+            comboHornBtn.addEventListener('mousedown', () => playSound('combo'));
+            comboHornBtn.addEventListener('mouseup', stopSound);
+            comboHornBtn.addEventListener('mouseleave', stopSound);
+            
+            // أحداث لوحة المفاتيح
+            document.addEventListener('keydown', (e) => {
+                if (e.key === '1') playContinuousSound('high');
+                if (e.key === '2') playContinuousSound('mid');
+                if (e.key === '3') playContinuousSound('low');
+                if (e.key === '4') playSound('combo');
+            });
+            
+            document.addEventListener('keyup', (e) => {
+                if (['1','2','3'].includes(e.key)) stopSound();
+                if (e.key === '4') stopSound();
+            });
+            
+            // التحكم في مستوى الصوت
+            volumeSlider.addEventListener('input', () => {
+                globalVolume = parseFloat(volumeSlider.value);
+            });
+            
+            // إظهار/إخفاء لوحة الإعدادات
+            settingsBtn.addEventListener('click', () => {
+                settingsPanel.style.display = settingsPanel.style.display === 'block' ? 'none' : 'block';
+            });
+            
+            // استعادة سياق الصوت عند النقر
+            document.body.addEventListener('click', () => {
+                if (audioContext && audioContext.state === 'suspended') {
+                    audioContext.resume().then(() => {
+                        soundStatus.textContent = "حالة الصوت: جاهز";
+                    });
+                }
+            });
+        }
+        
+        // بدء التطبيق عند تحميل الصفحة
+        window.addEventListener('load', initApp);
     </script>
 </body>
-    </html>
+                    </html>
