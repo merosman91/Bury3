@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاكاة بوري 3 - أبواق هوائية ثلاثية النغمات</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to right, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .app-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .horn-controls {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(30, 30, 40, 0.85);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .controls-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #ff9800;
+            border-bottom: 2px solid #ff5722;
+            padding-bottom: 10px;
+        }
+        
+        .horn-btn {
+            background: linear-gradient(to bottom, #3a7bd5, #2c3e50);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 25px 10px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .horn-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .horn-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .horn-btn i {
+            font-size: 2.5rem;
+        }
+        
+        .low-horn { background: linear-gradient(to bottom, #3a7bd5, #1e3c72); }
+        .mid-horn { background: linear-gradient(to bottom, #d5763a, #a04824); }
+        .high-horn { background: linear-gradient(to bottom, #d53a7b, #721e3c); }
+        .combo-horn { background: linear-gradient(to bottom, #7b3ad5, #3c1e72); }
+        
+        .key-hint {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 1rem;
+        }
+        
+        .info-panel {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(30, 30, 40, 0.85);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .info-title {
+            font-size: 1.8rem;
+            color: #4caf50;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #4caf50;
+            padding-bottom: 10px;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .feature {
+            background: rgba(70, 70, 90, 0.6);
+            border-radius: 10px;
+            padding: 15px;
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .feature i {
+            font-size: 1.8rem;
+            color: #ff9800;
+        }
+        
+        .feature-text h3 {
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+        
+        .instructions {
+            background: rgba(70, 70, 90, 0.6);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .instructions h3 {
+            color: #4caf50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .instructions ul {
+            padding-right: 20px;
+            line-height: 1.8;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        .instructions li strong {
+            color: #ff9800;
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            background: rgba(70, 70, 90, 0.6);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .volume-control i {
+            font-size: 1.5rem;
+            color: #ff9800;
+        }
+        
+        #volumeSlider {
+            flex: 1;
+            height: 10px;
+            -webkit-appearance: none;
+            background: #555;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        #volumeSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #ff9800;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+        
+        .truck-animation {
+            width: 100%;
+            height: 120px;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .truck {
+            position: absolute;
+            left: -200px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 4rem;
+            animation: drive 15s linear infinite;
+        }
+        
+        @keyframes drive {
+            0% { left: -200px; }
+            100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+        }
+        
+        .active {
+            transform: scale(0.95);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-truck-moving"></i> محاكاة بوري 3</h1>
+            <p class="subtitle">تطبيق ويب لمحاكاة نظام الأبواق الهوائية ثلاثية النغمات المستخدم في الشاحنات والحافلات الكبيرة. اضغط على الأزرار لتشغيل نغمات مختلفة وإنشاء توليفات صوتية مميزة!</p>
+        </header>
+        
+        <div class="app-container">
+            <div class="horn-controls">
+                <h2 class="controls-title"><i class="fas fa-sliders-h"></i> لوحة التحكم بالأبواق</h2>
+                
+                <button class="horn-btn low-horn" id="lowHorn">
+                    <i class="fas fa-volume-down"></i>
+                    النغمة المنخفضة
+                    <span class="key-hint">(1)</span>
+                    <span>صوت جهوري عميق</span>
+                </button>
+                
+                <button class="horn-btn mid-horn" id="midHorn">
+                    <i class="fas fa-volume"></i>
+                    النغمة المتوسطة
+                    <span class="key-hint">(2)</span>
+                    <span>صوت تنبيه قوي</span>
+                </button>
+                
+                <button class="horn-btn high-horn" id="highHorn">
+                    <i class="fas fa-volume-up"></i>
+                    النغمة الحادة
+                    <span class="key-hint">(3)</span>
+                    <span>صوت إنذار عالي</span>
+                </button>
+                
+                <button class="horn-btn combo-horn" id="comboHorn">
+                    <i class="fas fa-random"></i>
+                    توليفة ثلاثية
+                    <span class="key-hint">(4)</span>
+                    <span>نغمة مميزة قوية</span>
+                </button>
+                
+                <div class="volume-control">
+                    <i class="fas fa-volume-up"></i>
+                    <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.7">
+                    <i class="fas fa-volume-down"></i>
+                </div>
+            </div>
+            
+            <div class="info-panel">
+                <h2 class="info-title"><i class="fas fa-info-circle"></i> عن نظام بوري 3</h2>
+                
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-air-freshener"></i>
+                        <div class="feature-text">
+                            <h3>نظام هوائي ثلاثي</h3>
+                            <p>يعتمد على ضاغط هواء وثلاثة أبواق نحاسية</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <i class="fas fa-sliders-h"></i>
+                        <div class="feature-text">
+                            <h3>ثلاث مفاتيح تحكم</h3>
+                            <p>زر لكل بوق لإنشاء نغمات مختلفة</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <i class="fas fa-volume"></i>
+                        <div class="feature-text">
+                            <h3>صوت عالي الشدة</h3>
+                            <p>يصل إلى 150 ديسيبل للتنبيه في الطرق الطويلة</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <i class="fas fa-truck"></i>
+                        <div class="feature-text">
+                            <h3>استخدامات متعددة</h3>
+                            <p>للشاحنات والحافلات والقطارات</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="instructions">
+                    <h3><i class="fas fa-book"></i> طريقة الاستخدام</h3>
+                    <ul>
+                        <li>استخدم الأزرار أو مفاتيح <strong>1, 2, 3, 4</strong> لتشغيل الأبواق</li>
+                        <li>اضغط على الزر مستمراً لاستمرار الصوت كما في النظام الحقيقي</li>
+                        <li>جرب الضغط على عدة أزرار معاً لإنشاء توليفات صوتية جديدة</li>
+                        <li>استخدم المنزلق لضبط مستوى الصوت</li>
+                        <li>النغمة المنخفضة: للتنبيه العام والإشارة لبدء الحركة</li>
+                        <li>النغمة المتوسطة: لتنبيه السيارات القريبة</li>
+                        <li>النغمة الحادة: لتفادي الاصطدامات الطارئة</li>
+                        <li>التوليفة الثلاثية: للإشارة في الزحام وطلب فتح الطريق</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="truck-animation">
+            <div class="truck">🚚</div>
+        </div>
+        
+        <div class="footer">
+            <p>تطبيق محاكاة بوري 3 - نظام الأبواق الهوائية ثلاثية النغمات | تم التطوير باستخدام HTML5 وCSS3 وJavaScript</p>
+            <p>يمكنك استخدام هذا التطبيق للتدرب على الأصوات أو للترفيه - يوصى باستخدام السماعات</p>
+        </div>
+    </div>
+    
+    <script>
+        // تهيئة الأصوات باستخدام Howler.js
+        const sounds = {
+            low: new Howl({
+                src: ['https://assets.mixkit.co/sfx/preview/mixkit-truck-horn-715.mp3'],
+                volume: 0.7
+            }),
+            mid: new Howl({
+                src: ['https://assets.mixkit.co/sfx/preview/mixkit-bus-horn-715.mp3'],
+                volume: 0.7
+            }),
+            high: new Howl({
+                src: ['https://assets.mixkit.co/sfx/preview/mixkit-car-horn-718.mp3'],
+                volume: 0.7
+            }),
+            combo: new Howl({
+                src: ['https://assets.mixkit.co/sfx/preview/mixkit-train-horn-715.mp3'],
+                volume: 0.7
+            })
+        };
+        
+        // عناصر التحكم
+        const lowHornBtn = document.getElementById('lowHorn');
+        const midHornBtn = document.getElementById('midHorn');
+        const highHornBtn = document.getElementById('highHorn');
+        const comboHornBtn = document.getElementById('comboHorn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        
+        // أحداث الأزرار
+        lowHornBtn.addEventListener('mousedown', () => playHorn('low'));
+        lowHornBtn.addEventListener('mouseup', () => stopHorn('low'));
+        lowHornBtn.addEventListener('mouseleave', () => stopHorn('low'));
+        
+        midHornBtn.addEventListener('mousedown', () => playHorn('mid'));
+        midHornBtn.addEventListener('mouseup', () => stopHorn('mid'));
+        midHornBtn.addEventListener('mouseleave', () => stopHorn('mid'));
+        
+        highHornBtn.addEventListener('mousedown', () => playHorn('high'));
+        highHornBtn.addEventListener('mouseup', () => stopHorn('high'));
+        highHornBtn.addEventListener('mouseleave', () => stopHorn('high'));
+        
+        comboHornBtn.addEventListener('mousedown', () => playHorn('combo'));
+        comboHornBtn.addEventListener('mouseup', () => stopHorn('combo'));
+        comboHornBtn.addEventListener('mouseleave', () => stopHorn('combo'));
+        
+        // أحداث لوحة المفاتيح
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '1') playHorn('low');
+            if (e.key === '2') playHorn('mid');
+            if (e.key === '3') playHorn('high');
+            if (e.key === '4') playHorn('combo');
+        });
+        
+        document.addEventListener('keyup', (e) => {
+            if (e.key === '1') stopHorn('low');
+            if (e.key === '2') stopHorn('mid');
+            if (e.key === '3') stopHorn('high');
+            if (e.key === '4') stopHorn('combo');
+        });
+        
+        // التحكم في مستوى الصوت
+        volumeSlider.addEventListener('input', () => {
+            const volume = parseFloat(volumeSlider.value);
+            Object.values(sounds).forEach(sound => {
+                sound.volume(volume);
+            });
+        });
+        
+        // وظيفة تشغيل البوق
+        function playHorn(type) {
+            sounds[type].play();
+            document.getElementById(`${type}Horn`).classList.add('active');
+            
+            // اهتزاز الجهاز إذا كان مدعومًا
+            if (navigator.vibrate) {
+                navigator.vibrate(100);
+            }
+        }
+        
+        // وظيفة إيقاف البوق
+        function stopHorn(type) {
+            sounds[type].stop();
+            document.getElementById(`${type}Horn`).classList.remove('active');
+        }
+        
+        // تحميل جميع الأصوات عند فتح الصفحة
+        window.addEventListener('load', () => {
+            Object.values(sounds).forEach(sound => {
+                sound.load();
+            });
+        });
+    </script>
+</body>
+  </html>
